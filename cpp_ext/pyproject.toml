@@ -45,7 +45,7 @@ archs = ["auto64"]          # Only target 64 bit architectures
 MACOSX_DEPLOYMENT_TARGET = "10.14"
 
 [tool.cibuildwheel.macos]
-before-all = ["brew install opencv libomp"]
+before-all = ["brew install opencv llvm libomp"]
 
 [tool.cibuildwheel.linux]
 before-all = ["git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git", "cd opencv && mkdir -p build && cd build", "cmake .. -DBUILD_LIST=core", "cmake --build .", "cmake --install ."]
