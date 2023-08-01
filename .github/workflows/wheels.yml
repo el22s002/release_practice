@@ -46,7 +46,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
     - uses: actions/checkout@v3
@@ -95,13 +95,13 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -R
       
-#     - name: Push generated files
-#       run: |
-#         git config user.name github-actions[bot]
-#         git config user.email github-actions[bot]@users.noreply.github.com
-#         git add .
-#         if git commit -m "Generate files by GitHub Actions"; then
-#             git push
-#         fi
+    - name: Push generated files
+      run: |
+        git config user.name github-actions[bot]
+        git config user.email github-actions[bot]@users.noreply.github.com
+        git add .
+        if git commit -m "Generate files by GitHub Actions"; then
+            git push
+        fi
         
 
