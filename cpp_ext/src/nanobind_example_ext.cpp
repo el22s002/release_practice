@@ -1,6 +1,7 @@
 #include <iostream>
 #include <nanobind/nanobind.h>
 #include <opencv2/core.hpp>
+#include <omp.h>
 
 namespace nb = nanobind;
 
