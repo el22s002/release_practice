@@ -14,23 +14,28 @@ jobs:
   build_sdist:
     name: Build SDist
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./cpp_ext
     steps:
     - uses: actions/checkout@v3
       with:
         submodules: true
+        
+    - name: Display structure of downloaded files
+      run: ls -R
 
     - name: Build SDist
+      working-directory: ./cpp_ext
       run: pipx run build --sdist
 
     - name: Check metadata
+      working-directory: ./cpp_ext
       run: pipx run twine check dist/*
+    
+    - name: Display structure of downloaded files
+      run: ls -R
 
     - uses: actions/upload-artifact@v3
       with:
-        path: dist/*.tar.gz
+        path: cpp_ext/dist/*.tar.gz
         
     - name: Display structure of downloaded files
       run: ls -R
