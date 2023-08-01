@@ -1,45 +1,13 @@
 name: Wheels
 
 on:
-  workflow_dispatch:
-#   pull_request:
 #   push:
-#     branches:
-#      - master
-#   release:
-#     types:
-#       - published
+#     branches: [ "main" ]
+#     paths:
+#       - cpp_ext/src/*
+  workflow_dispatch:
 
 jobs:
-#   build_sdist:
-#     name: Build SDist
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v3
-#       with:
-#         submodules: true
-        
-#     - name: Display structure of downloaded files
-#       run: ls -R
-
-#     - name: Build SDist
-#       working-directory: ./cpp_ext
-#       run: pipx run build --sdist
-
-#     - name: Check metadata
-#       working-directory: ./cpp_ext
-#       run: pipx run twine check dist/*
-    
-#     - name: Display structure of downloaded files
-#       run: ls -R
-
-#     - uses: actions/upload-artifact@v3
-#       with:
-#         path: cpp_ext/dist/*.tar.gz
-        
-#     - name: Display structure of downloaded files
-#       run: ls -R
-
   build_wheels:
     name: Wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -50,12 +18,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        submodules: true
         
-    - name: Display structure of downloaded files
-      run: ls -R
-
     - uses: pypa/cibuildwheel@v2.13.0
       env:
         # Cross-compile on macOS
@@ -74,20 +37,22 @@ jobs:
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
+        name: artifact
         path: wheelhouse/*.whl
         
     - name: Display structure of downloaded files
       run: ls -R
 
-  upload_all:
-    name: Upload if release
+  push_wheels:
+    name: Push wheels
     needs: build_wheels
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
 
-    - uses: actions/download-artifact@v3
+    - name: Download wheels
+      uses: actions/download-artifact@v3
       with:
         name: artifact
         path: ./cpp_ext/dist
@@ -95,7 +60,7 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -R
       
-    - name: Push generated files
+    - name: Push generated wheels
       run: |
         git config user.name github-actions[bot]
         git config user.email github-actions[bot]@users.noreply.github.com
@@ -104,4 +69,3 @@ jobs:
             git push
         fi
         
-
