@@ -61,6 +61,8 @@ jobs:
 
     - uses: pypa/cibuildwheel@v2.13.0
       env:
+        working-directory: ./cpp_ext
+        
         # Cross-compile on macOS
         CIBW_ARCHS_MACOS: x86_64 arm64
 
