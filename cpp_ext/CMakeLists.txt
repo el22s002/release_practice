@@ -63,6 +63,17 @@ find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 # OpenMP
+set(LLVM_ROOT_DIR "/usr/local/opt/llvm")
+find_package(LLVM)
+if(LLVM_FOUND)
+	include_directories (${LLVM_LIBRARY_DIRS}/clang/${LLVM_VERSION_BASE_STRING}/include)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
+	find_library(IOMP5LIB
+		NAMES "iomp5" "iomp5md" "libiomp5" "libiomp5md" "libomp"
+		HINTS ${LLVM_LIBRARY_DIRS})
+	set (TESTOMP_LIBRARIES ${TESTOMP_LIBRARIES} ${IOMP5LIB})
+endif(LLVM_FOUND)
+
 if(APPLE)
     set(CMAKE_C_COMPILER clang)
     set(CMAKE_CXX_COMPILER clang++)
@@ -80,5 +91,4 @@ if(APPLE)
     endif()
 endif()
 
-find_package(OpenMP REQUIRED)
-target_link_libraries(nanobind_example_ext PUBLIC OpenMP::OpenMP_CXX)
+find_package( OpenMP REQUIRED )
