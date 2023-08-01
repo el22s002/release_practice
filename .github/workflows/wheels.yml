@@ -11,92 +11,95 @@ on:
 #       - published
 
 jobs:
-  build_sdist:
-    name: Build SDist
-    runs-on: ubuntu-latest
+#   build_sdist:
+#     name: Build SDist
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v3
+#       with:
+#         submodules: true
+        
+#     - name: Display structure of downloaded files
+#       run: ls -R
+
+#     - name: Build SDist
+#       working-directory: ./cpp_ext
+#       run: pipx run build --sdist
+
+#     - name: Check metadata
+#       working-directory: ./cpp_ext
+#       run: pipx run twine check dist/*
+    
+#     - name: Display structure of downloaded files
+#       run: ls -R
+
+#     - uses: actions/upload-artifact@v3
+#       with:
+#         path: cpp_ext/dist/*.tar.gz
+        
+#     - name: Display structure of downloaded files
+#       run: ls -R
+
+  build_wheels:
+    name: Wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ./cpp_ext
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+
     steps:
     - uses: actions/checkout@v3
       with:
         submodules: true
-        
-    - name: Display structure of downloaded files
-      run: ls -R
 
-    - name: Build SDist
-      working-directory: ./cpp_ext
-      run: pipx run build --sdist
+    - uses: pypa/cibuildwheel@v2.13.0
+      env:
+        # Cross-compile on macOS
+        CIBW_ARCHS_MACOS: x86_64 arm64
 
-    - name: Check metadata
-      working-directory: ./cpp_ext
-      run: pipx run twine check dist/*
-    
-    - name: Display structure of downloaded files
-      run: ls -R
+        # Temporary: use pre-release Python 3.12 for stable ABI builds
+        CIBW_PRERELEASE_PYTHONS: True
 
-    - uses: actions/upload-artifact@v3
+    - name: Verify clean directory
+      run: git diff --exit-code
+      shell: bash
+
+    - name: Upload wheels
+      uses: actions/upload-artifact@v3
       with:
-        path: cpp_ext/dist/*.tar.gz
+        path: wheelhouse/*.whl
         
     - name: Display structure of downloaded files
       run: ls -R
 
-  # build_wheels:
-  #   name: Wheels on ${{ matrix.os }}
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       os: [ubuntu-latest, macos-latest]
 
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #     with:
-  #       submodules: true
+  upload_all:
+    name: Upload if release
+    needs: build_wheels
+    runs-on: ubuntu-latest
 
-  #   - uses: pypa/cibuildwheel@v2.13.0
-  #     env:
-  #       # Cross-compile on macOS
-  #       CIBW_ARCHS_MACOS: x86_64 arm64
+    steps:
+    - uses: actions/checkout@v3
 
-  #       # Temporary: use pre-release Python 3.12 for stable ABI builds
-  #       CIBW_PRERELEASE_PYTHONS: True
-
-  #   - name: Verify clean directory
-  #     run: git diff --exit-code
-  #     shell: bash
-
-  #   - name: Upload wheels
-  #     uses: actions/upload-artifact@v3
-  #     with:
-  #       path: wheelhouse/*.whl
+    - uses: actions/download-artifact@v3
+      with:
+        name: artifact
+        path: dist
         
-  #   - name: Display structure of downloaded files
-  #     run: ls -R
-
-
-  # upload_all:
-  #   name: Upload if release
-  #   needs: [build_wheels, build_sdist]
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - uses: actions/checkout@v3
-
-  #   - uses: actions/download-artifact@v3
-  #     with:
-  #       name: artifact
-  #       path: dist
-        
-  #   - name: Display structure of downloaded files
-  #     run: ls -R
+    - name: Display structure of downloaded files
+      run: ls -R
       
-  #   - name: Push generated files
-  #     run: |
-  #       git config user.name github-actions[bot]
-  #       git config user.email github-actions[bot]@users.noreply.github.com
-  #       git add .
-  #       if git commit -m "Generate files by GitHub Actions"; then
-  #           git push
-  #       fi
+#     - name: Push generated files
+#       run: |
+#         git config user.name github-actions[bot]
+#         git config user.email github-actions[bot]@users.noreply.github.com
+#         git add .
+#         if git commit -m "Generate files by GitHub Actions"; then
+#             git push
+#         fi
         
 
