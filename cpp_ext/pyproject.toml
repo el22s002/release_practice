@@ -44,7 +44,7 @@ archs = ["auto64"]          # Only target 64 bit architectures
 MACOSX_DEPLOYMENT_TARGET = "10.14"  # Needed for full C++17 support
 
 [tool.cibuildwheel.macos]
-before-all = ["brew install opencv llvm libomp", 'export PATH="$(brew --prefix llvm)/bin:$PATH"', 'export LDFLAGS="-L$(brew --prefix llvm)/lib/c++ -Wl,-rpath,$(brew --prefix llvm)/lib/c++"']
+before-all = ["brew install opencv llvm libomp", 'export LDFLAGS="-L/usr/local/opt/llvm/lib"', 'export CPPFLAGS="-I/usr/local/opt/llvm/include"']
 
 [tool.cibuildwheel.linux]
 before-all = ["git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git", "cd opencv && mkdir -p build && cd build", "cmake .. -DBUILD_LIST=core", "cmake --build .", "cmake --install ."]
