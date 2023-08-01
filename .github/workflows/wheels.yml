@@ -14,22 +14,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [macos-latest]
 
     steps:
     - uses: actions/checkout@v3
-    
-#     - name: Install OpenCV and other dependencies
-#       run: |
-#         sudo apt-get update
-#         echo "Update done"
-#         sudo apt install -y cmake libopencv-dev
-#         echo "Install done"
         
     - uses: pypa/cibuildwheel@v2.13.0
       env:
         # Cross-compile on macOS
-        CIBW_ARCHS_MACOS: x86_64 arm64
+#         CIBW_ARCHS_MACOS: x86_64 arm64
+        CIBW_ARCHS_MACOS: universal2
 
         # Temporary: use pre-release Python 3.12 for stable ABI builds
         CIBW_PRERELEASE_PYTHONS: True
