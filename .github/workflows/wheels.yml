@@ -28,7 +28,9 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         path: dist/*.tar.gz
-
+        
+    - name: Display structure of downloaded files
+      run: ls -R
 
   build_wheels:
     name: Wheels on ${{ matrix.os }}
@@ -59,6 +61,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         path: wheelhouse/*.whl
+        
+    - name: Display structure of downloaded files
+      run: ls -R
 
 
   upload_all:
@@ -73,4 +78,7 @@ jobs:
       with:
         name: artifact
         path: dist
+        
+    - name: Display structure of downloaded files
+      run: ls -R
 
