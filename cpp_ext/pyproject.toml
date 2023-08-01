@@ -48,4 +48,4 @@ MACOSX_DEPLOYMENT_TARGET = "10.14"
 before-all = ["brew install opencv"]
 
 [tool.cibuildwheel.linux]
-before-all = ["wget -O opencv.zip https://github.com/opencv/opencv/archive/4.x.zip", "unzip opencv.zip", "mkdir -p build && cd build", "cmake ../opencv-4.x -DBUILD_LIST=core,imgproc", "cmake --build .", "cmake --install ."]
+before-all = ["git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git", "cd opencv && mkdir -p build && cd build", "cmake .. -DBUILD_LIST=core,imgproc", "cmake --build .", "cmake --install ."]
