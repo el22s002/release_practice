@@ -12,7 +12,11 @@ void loop()
 #pragma omp parallel for
     for (int i = 0; i<30; i++)
     {
-        std::cout << i << std::endl;
+        std::cout << "Loop: " << i << std::endl;
+        if (i % 2 == 0)
+        {
+            for (int j = 0; j<10000; j++);
+        }
     }
 }
 
