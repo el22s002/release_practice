@@ -64,7 +64,7 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 
 # OpenMP
 if(APPLE)
-  set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp -L$(brew --prefix libomp)/lib -I$(brew --prefix libomp)/include")
+  set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp -L$$(brew --prefix libomp)/lib -I$$(brew --prefix libomp)/include")
 endif()
 
 find_package(OpenMP REQUIRED)
