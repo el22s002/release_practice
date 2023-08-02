@@ -64,8 +64,12 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 
 # OpenMP
 if(APPLE)
+  # OpenMP settings for macOS (Apple silicon)
+  set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp -I/usr/local/opt/libomp/include")
+  set(OpenMP_C_LIB_NAMES "libomp" "libgomp" "libiomp5")
   set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -I/usr/local/opt/libomp/include")
-  set(OpenMP_CXX_LIB_NAMES "omp")
-  set(OpenMP_omp_LIBRARY /usr/local/opt/libomp/lib/libomp.dylib)
+  set(OpenMP_CXX_LIB_NAMES "libomp" "libgomp" "libiomp5")
+  set(OpenMP_omp_LIBRARY "/usr/local/opt/libomp/lib/libomp.dylib")
 endif()
+
 find_package(OpenMP REQUIRED)
