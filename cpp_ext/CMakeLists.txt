@@ -84,10 +84,10 @@ if(APPLE)
   set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp")
 
   # Add the flags to the target
-  set_target_properties(nanobind_example_ext PROPERTIES
-    COMPILE_FLAGS ${OpenMP_CXX_FLAGS}
-    LINK_FLAGS ${OpenMP_CXX_FLAGS}
-  )
+  #set_target_properties(nanobind_example_ext PROPERTIES
+  #  COMPILE_FLAGS ${OpenMP_CXX_FLAGS}
+  #  LINK_FLAGS ${OpenMP_CXX_FLAGS}
+  #)
 
   # Link the target to the OpenMP library
   target_link_libraries(nanobind_example_ext PRIVATE ${OpenMP_CXX_FLAGS})
