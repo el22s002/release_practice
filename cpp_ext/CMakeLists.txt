@@ -76,10 +76,10 @@ if(APPLE)
   set(LIBOMP_INCLUDE_DIR "${BREW_PREFIX}/include")
 
   # Link the target to the library directories
-  target_link_directories(nanobind_example_ext PRIVATE ${LIBOMP_LIB_DIR})
+  #target_link_directories(nanobind_example_ext PRIVATE ${LIBOMP_LIB_DIR})
   
   # Add the include directories to your target
-  target_include_directories(nanobind_example_ext PRIVATE ${LIBOMP_INCLUDE_DIR})
+  #target_include_directories(nanobind_example_ext PRIVATE ${LIBOMP_INCLUDE_DIR})
 
   set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp")
 
@@ -90,7 +90,6 @@ if(APPLE)
   #)
 
   # Link the target to the OpenMP library
-  find_package(OpenMP REQUIRED)
   target_link_libraries(nanobind_example_ext PRIVATE ${OpenMP_CXX_FLAGS})
 else()
   find_package(OpenMP REQUIRED)
