@@ -64,16 +64,7 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 
 # OpenMP
 if(APPLE)
-  # OpenMP settings for macOS (Apple silicon) to avoid "Could NOT find OpenMP_CXX"
-  set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp")
-  set(OpenMP_CXX_LIB_NAMES "libomp" "libgomp" "libiomp5")
-  set(OpenMP_omp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
-  set(OpenMP_libomp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
-  set(OpenMP_libgomp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
-  set(OpenMP_libiomp5_LIBRARY ${OpenMP_CXX_LIB_NAMES})
-
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+  set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp -L$(brew --prefix libomp)/lib -I$(brew --prefix libomp)/include")
 endif()
 
 find_package(OpenMP REQUIRED)
