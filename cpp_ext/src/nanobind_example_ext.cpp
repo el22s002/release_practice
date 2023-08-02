@@ -9,6 +9,7 @@ using namespace nb::literals;
 
 void loop()
 {
+#pragma omp parallel for
     for (int i = 0; i<30; i++)
     {
         std::cout << i << std::endl;
