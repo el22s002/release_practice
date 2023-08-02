@@ -82,7 +82,16 @@ if(APPLE)
   target_include_directories(nanobind_example_ext PRIVATE ${LIBOMP_INCLUDE_DIR})
 
   set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp")
-  
-endif()
 
-find_package(OpenMP REQUIRED)
+  # Add the flags to the target
+  set_target_properties(nanobind_example_ext PROPERTIES
+    COMPILE_FLAGS ${OpenMP_CXX_FLAGS}
+    LINK_FLAGS ${OpenMP_CXX_FLAGS}
+  )
+
+  # Link the target to the OpenMP library
+  target_link_libraries(nanobind_example_ext PRIVATE ${OpenMP_CXX_FLAGS})
+else()
+  find_package(OpenMP REQUIRED)
+  target_link_libraries(nanobind_example_ext PRIVATE OpenMP::OpenMP_CXX)
+endif()
