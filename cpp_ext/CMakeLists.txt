@@ -63,5 +63,11 @@ find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 # OpenMP
+if(APPLE)
+  set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp -I/usr/local/opt/libomp/include")
+  set(OpenMP_C_LIB_NAMES "omp")
+  set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -I/usr/local/opt/libomp/include")
+  set(OpenMP_CXX_LIB_NAMES "omp")
+  set(OpenMP_omp_LIBRARY /usr/local/opt/libomp/lib/libomp.dylib)
+endif()
 find_package(OpenMP REQUIRED)
-target_link_libraries(nanobind_example_ext PUBLIC OpenMP::OpenMP_CXX)
