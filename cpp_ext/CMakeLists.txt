@@ -64,7 +64,25 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 
 # OpenMP
 if(APPLE)
-  set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp -L$$(brew --prefix libomp)/lib -I$$(brew --prefix libomp)/include")
+  # Find the library paths and include paths using brew command
+  execute_process(
+    COMMAND brew --prefix libomp
+    OUTPUT_VARIABLE BREW_PREFIX
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+
+  # Append the appropriate paths to the library and include directories
+  set(LIBOMP_LIB_DIR "${BREW_PREFIX}/lib")
+  set(LIBOMP_INCLUDE_DIR "${BREW_PREFIX}/include")
+
+  # Link the target to the library directories
+  target_link_directories(nanobind_example_ext PRIVATE ${LIBOMP_LIB_DIR})
+  
+  # Add the include directories to your target
+  target_include_directories(nanobind_example_ext PRIVATE ${LIBOMP_INCLUDE_DIR})
+
+  set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp")
+  
 endif()
 
 find_package(OpenMP REQUIRED)
