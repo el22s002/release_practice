@@ -9,13 +9,13 @@ using namespace nb::literals;
 
 NB_MODULE(nanobind_example_ext, m) {
     m.def("add", [](int a, int b) { return a + b; }, "a"_a, "b"_a);
-    m.def("parallel", []() {
-        #pragma omp parallel for
-        for (int i = 0; i<30; i++)
-        {
-            std::cout << "For loop: " << i << std::endl;
-        }
-    });
+    // m.def("parallel", []() {
+    //     #pragma omp parallel for
+    //     for (int i = 0; i<30; i++)
+    //     {
+    //         std::cout << "For loop: " << i << std::endl;
+    //     }
+    // });
     m.def("print_vec", []() { 
          cv::Vec3f vec;
          std::cout << vec << std::endl;
