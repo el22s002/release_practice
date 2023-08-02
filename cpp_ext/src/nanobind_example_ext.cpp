@@ -9,15 +9,14 @@ using namespace nb::literals;
 
 void loop()
 {
+    int sum = 0;
 #pragma omp parallel for
-    for (int i = 0; i<30; i++)
+    for (int i = 0; i<100000; i++)
     {
-        std::cout << "Loop: " << i << std::endl;
-        if (i % 2 == 0)
-        {
-            for (int j = 0; j<10000; j++);
-        }
+        sum += i;
     }
+    
+    std::cout << sum << std::endl;
 }
 
 NB_MODULE(nanobind_example_ext, m) {
