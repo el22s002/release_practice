@@ -45,6 +45,7 @@ MACOSX_DEPLOYMENT_TARGET = "10.14"  # Needed for full C++17 support
 
 [tool.cibuildwheel.macos]
 before-all = ["brew install opencv libomp"]
+environment = { CFLAGS="-Xpreprocessor -fopenmp", CXXFLAGS="-Xpreprocessor -fopenmp", LDFLAGS="-lomp" }
 
 
 [tool.cibuildwheel.linux]
