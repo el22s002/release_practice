@@ -90,6 +90,7 @@ if(APPLE)
   #)
 
   # Link the target to the OpenMP library
+  find_package(OpenMP REQUIRED)
   target_link_libraries(nanobind_example_ext PRIVATE ${OpenMP_CXX_FLAGS})
 else()
   find_package(OpenMP REQUIRED)
