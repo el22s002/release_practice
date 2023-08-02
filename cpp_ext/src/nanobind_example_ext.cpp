@@ -11,7 +11,7 @@ void loop()
 {
     int sum = 0;
 #pragma omp parallel for
-    for (int i = 0; i<12345678; i++)
+    for (int i = 0; i<123456789; i++)
     {
         sum += 1;
     }
