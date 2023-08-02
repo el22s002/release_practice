@@ -41,7 +41,7 @@ archs = ["auto64"]          # Only target 64 bit architectures
 # test-requires = "pytest"
 
 [tool.cibuildwheel.macos]
-before-all = ["brew install opencv libomp && export LDFLAGS=\"-L/usr/local/opt/libomp/lib\" && export CPPFLAGS=\"-I/usr/local/opt/libomp/include\""]
+before-all = ["brew install opencv libomp llvm && export PATH=/usr/local/opt/llvm/bin:$PATH && export LDFLAGS=\"-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib\" && export CPPFLAGS=\"-I/usr/local/opt/llvm/include\""]
 
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.14"  # Needed for full C++17 support
