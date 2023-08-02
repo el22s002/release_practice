@@ -41,16 +41,10 @@ archs = ["auto64"]          # Only target 64 bit architectures
 # test-requires = "pytest"
 
 [tool.cibuildwheel.macos]
-before-all = ["brew install opencv libomp"]
+before-all = ["brew install opencv libomp && export LDFLAGS=\"-L/usr/local/opt/libomp/lib\" && export CPPFLAGS=\"-I/usr/local/opt/libomp/include\""]
 
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.14"  # Needed for full C++17 support
-# OpenMP settings for macOS
-CC = "clang"
-CXX = "clang++"
-CFLAGS = "-fopenmp=libomp"
-CXXFLAGS = "-fopenmp=libomp"
-LDFLAGS = "-fopenmp=libomp"
 
 [tool.cibuildwheel.linux]
 before-all = ["git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git", "cd opencv && mkdir -p build && cd build", "cmake .. -DBUILD_LIST=core", "cmake --build .", "cmake --install ."]
