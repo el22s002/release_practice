@@ -38,7 +38,7 @@ archs = ["auto64"]          # Only target 64 bit architectures
 
 [tool.cibuildwheel.macos]
 # "brew install opencv"
-before-all = ["ln -s $$(brew --prefix libomp)/include/omp-tools.h /usr/local/include/omp-tools.h", "ln -s $$(brew --prefix libomp)/include/omp.h /usr/local/include/omp.h", "ln -s $$(brew --prefix libomp)/include/ompt.h /usr/local/include/ompt.h", "ln -s $$(brew --prefix libomp)/lib/libomp.a /usr/local/lib/libomp.a", "ln -s $$(brew --prefix libomp)/lib/libomp.dylib /usr/local/lib/libomp.dylib"]
+before-all = ["ln -s $(brew --prefix libomp)/include/omp-tools.h /usr/local/include/omp-tools.h", "ln -s $(brew --prefix libomp)/include/omp.h /usr/local/include/omp.h", "ln -s $(brew --prefix libomp)/include/ompt.h /usr/local/include/ompt.h", "ln -s $(brew --prefix libomp)/lib/libomp.a /usr/local/lib/libomp.a", "ln -s $(brew --prefix libomp)/lib/libomp.dylib /usr/local/lib/libomp.dylib"]
 
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.14"  # Needed for full C++17 support
