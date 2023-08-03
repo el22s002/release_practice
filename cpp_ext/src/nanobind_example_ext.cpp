@@ -11,9 +11,13 @@ void loop()
 {
     int sum = 0;
 #pragma omp parallel for
-    for (int i = 0; i<123456789; i++)
+    for (int i = 0; i<1234567890; i++)
     {
         sum += 1;
+        if (i % 3 == 0)
+        {
+            for (int j = 0; j<100000; j++);
+        }
     }
     
     std::cout << sum << std::endl;
