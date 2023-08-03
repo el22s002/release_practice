@@ -64,7 +64,7 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 
 # OpenMP
 if(APPLE)
-  find_package(OpenMP REQUIRED)
+  find_package(OpenMP)
 
   if(NOT OpenMP_FOUND)
     message(STATUS "OpenMP not found, trying again with brew --prefix libomp")
