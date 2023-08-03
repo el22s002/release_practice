@@ -31,8 +31,21 @@ jobs:
           brew install opencv &&
           sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
 
+        CIBW_BEFORE_BUILD_WINDOWS: >
+          choco install opencv
+
+        CIBW_BEFORE_BUILD_LINUX: >
+          git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git &&
+          cd opencv && mkdir -p build && cd build &&
+          cmake .. -DBUILD_LIST=core &&
+          cmake --build . &&
+          cmake --install . 
+
         CIBW_ENVIRONMENT_MACOS: >
           CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build"
+
+        CIBW_ENVIRONMENT_WINDOWS: >
+          OpenCV_DIR="c:/tools/opencv/build"
           
         CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
           DYLD_LIBRARY_PATH=/usr/local/miniconda/envs/build/lib delocate-wheel --require-archs {delocate_archs} -w {dest_dir} {wheel}
