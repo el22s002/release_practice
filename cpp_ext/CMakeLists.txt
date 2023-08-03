@@ -63,18 +63,16 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 #include_directories(${OpenCV_INCLUDE_DIRS})
 
 # OpenMP
-# OpenMP
 find_package(OpenMP)
 
 if(NOT OpenMP_FOUND)
-  message(FATAL_ERROR "OpenMP not found")
-
   # Print ls
   execute_process(COMMAND ls)
 
   # Print pwd
   execute_process(COMMAND pwd)
-endif()
 
+  message(FATAL_ERROR "OpenMP not found")
+endif()
 target_link_libraries(nanobind_example_ext PUBLIC OpenMP::OpenMP_CXX)
 
