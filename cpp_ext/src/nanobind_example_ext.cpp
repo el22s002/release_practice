@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <nanobind/nanobind.h>
 // #include <opencv2/core.hpp>
-// #include <omp.h>
+#include <omp.h>
 
 namespace nb = nanobind;
 
