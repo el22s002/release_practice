@@ -81,7 +81,8 @@ if(APPLE)
   # Add the include directories to your target
   target_include_directories(nanobind_example_ext PRIVATE ${LIBOMP_INCLUDE_DIR})
 
-  set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp")
+  #set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp")
+  set(OpenMP_CXX_FLAGS "-Xclang -fopenmp -lomp")
 
   # Add the flags to the target
   #set_target_properties(nanobind_example_ext PROPERTIES
