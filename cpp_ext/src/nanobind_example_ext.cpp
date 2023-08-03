@@ -10,7 +10,7 @@ using namespace nb::literals;
 void loop()
 {
     int sum = 0;
-#pragma omp parallel for
+    #pragma omp parallel for
     for (int i = 0; i<1234567890; i++)
     {
         sum += 1;
