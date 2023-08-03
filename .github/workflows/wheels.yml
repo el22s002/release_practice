@@ -22,18 +22,8 @@ jobs:
     - name: Build libomp on macos
       if: runner.os == 'macOS'
       run: |
-        DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-        build_dir=${DIR}/libs_build
-        git clone --depth 1 --branch llvmorg-11.1.0 https://github.com/llvm/llvm-project
-        pushd llvm-project/openmp
-        mkdir build
-        cd build
-        cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_INSTALL_PREFIX="${build_dir}" -DCMAKE_MACOSX_RPATH="${build_dir}/lib" ..
-        make
-        make install
-        popd
-        rm -rf llvm-project
-      shell: bash
+        brew install llvm libomp
+        export DYLD_LIBRARY_PATH=$(brew --prefix libomp)/lib:$(brew --prefix libomp)/include
               
     - uses: pypa/cibuildwheel@v2.13.0
       env:
