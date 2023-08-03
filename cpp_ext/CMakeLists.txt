@@ -65,7 +65,6 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 
 # OpenMP
 if(APPLE)
-  # set(CMAKE_PREFIX_PATH "/usr/local/miniconda/envs/build")
   find_package(OpenMP)
 
   if(NOT OpenMP_FOUND)
