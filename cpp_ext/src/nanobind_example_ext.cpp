@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <nanobind/nanobind.h>
 // #include <opencv2/core.hpp>
 #include <omp.h>
