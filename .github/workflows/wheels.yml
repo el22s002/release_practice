@@ -35,11 +35,13 @@ jobs:
           choco install opencv
 
         CIBW_BEFORE_BUILD_LINUX: >
-          git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git &&
-          cd opencv && mkdir -p build && cd build &&
-          cmake .. -DBUILD_LIST=core &&
-          cmake --build . &&
-          cmake --install . 
+          if [ ! -d "opencv" ]; then
+            git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git &&
+            cd opencv && mkdir -p build && cd build &&
+            cmake .. -DBUILD_LIST=core &&
+            cmake --build . &&
+            cmake --install . 
+          fi
 
         CIBW_ENVIRONMENT_MACOS: >
           CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build"
