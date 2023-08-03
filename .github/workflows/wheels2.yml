@@ -82,10 +82,14 @@ jobs:
           CIBW_MANYLINUX_I686_IMAGE: manylinux1
           CIBW_TEST_SKIP: "*-macosx_arm64"
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload wheels
+        uses: actions/upload-artifact@v3
         with:
-          name: wheels
-          path: ./dist/*.whl
+          name: artifact
+          path: wheelhouse/*.whl
+        
+      - name: Display structure of downloaded files
+        run: ls -R
 
   push_wheels:
     name: Push wheels
@@ -98,7 +102,7 @@ jobs:
     - name: Download wheels
       uses: actions/download-artifact@v3
       with:
-        name: wheels
+        name: artifact
         path: ./cpp_ext/dist
         
     - name: Display structure of downloaded files
