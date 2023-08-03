@@ -95,3 +95,5 @@ if(APPLE)
 else()
   find_package(OpenMP REQUIRED)
 endif()
+
+target_link_libraries(nanobind_example_ext PRIVATE OpenMP::OpenMP_CXX)
