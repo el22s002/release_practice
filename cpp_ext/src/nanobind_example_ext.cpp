@@ -7,19 +7,24 @@ namespace nb = nanobind;
 
 using namespace nb::literals;
 
-void loop()
-{
-    long int sum = 0;
-#pragma omp parallel for
-    for (long int i = 0; i<123456789000; i++)
-    {
-        if (sum == i)
+void loop() {
+    const int arraySize = 30000;
+    std::vector<int> data(arraySize);
+    int sum = 0;
+
+    #pragma omp parallel for reduction(+:sum)
+    for (int i = 0; i < arraySize; ++i) {
+        for (int j = 0; j < arraySize; j++)
         {
-            sum += 1;
+            for (int k = 0; k < arraySize; k++)
+            {
+                data[i] = k + 1;
+            }
         }
+        sum += data[i];
     }
 
-    std::cout << sum << std::endl;
+    std::cout << "The sum is: " << sum << std::endl;
 }
 
 NB_MODULE(nanobind_example_ext, m) {
