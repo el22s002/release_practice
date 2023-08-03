@@ -22,7 +22,7 @@ jobs:
     - uses: pypa/cibuildwheel@v2.13.0
       env:
         # Cross-compile on macOS
-        CIBW_ARCHS_MACOS: arm64, x86
+        CIBW_ARCHS_MACOS: arm64 x86_64
 #         CIBW_ARCHS_MACOS: universal2
 
         # Temporary: use pre-release Python 3.12 for stable ABI builds
