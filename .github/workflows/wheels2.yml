@@ -2,11 +2,6 @@ name: Build and Test Wheels
 on:
   workflow_dispatch:
 
-env:
-  CIBW_BUILD_VERBOSITY: 2
-  CIBW_ENVIRONMENT: PIP_PREFER_BINARY=1
-
-
 jobs:
   build_macos_wheels:
     name: Build python ${{ matrix.cibw_python }} ${{ matrix.cibw_arch }} wheels on ${{ matrix.os }}
