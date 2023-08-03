@@ -28,6 +28,7 @@ jobs:
 
         # OpenMP_CXX (OenMX_CXX_FLAGS and OpenMP_CXX_LIB_NAMES)
         CIBW_BEFORE_BUILD_MACOS: >
+          brew install opencv
           sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
 
         CIBW_ENVIRONMENT_MACOS: >
