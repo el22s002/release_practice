@@ -63,5 +63,9 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 #include_directories(${OpenCV_INCLUDE_DIRS})
 
 # OpenMP
+if(APPLE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xpreprocessor -fopenmp -L$(brew --prefix libomp)/lib -I$(brew --prefix libomp)/include -lomp")
+else()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
+endif()
 find_package(OpenMP REQUIRED)
-target_link_libraries(nanobind_example_ext PRIVATE OpenMP::OpenMP_CXX)
