@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <nanobind/nanobind.h>
 // #include <opencv2/core.hpp>
-#include <omp.h>
+// #include <omp.h>
 
 namespace nb = nanobind;
 
@@ -12,7 +12,7 @@ void loop() {
     const int arraySize = 50000;
     int sum = 0;
 
-    #pragma omp parallel for
+    // #pragma omp parallel for
     for (int i = 0; i < arraySize; ++i) {
         for (int j = 0; j < arraySize; ++j) {
             int rand_val = std::rand();
