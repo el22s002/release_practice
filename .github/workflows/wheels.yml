@@ -40,25 +40,18 @@ jobs:
 
         # OpenMP_CXX (OenMX_CXX_FLAGS and OpenMP_CXX_LIB_NAMES)
         CIBW_BEFORE_BUILD_MACOS: >
-          sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
-          # sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2 &&
-          # PREFIX="/usr/local/miniconda/envs/build" &&
-          # export CC=/usr/bin/clang &&
-          # export CXX=/usr/bin/clang++ &&
-          # export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp" &&
-          # export CFLAGS="$CFLAGS -Wno-implicit-function-declaration -I$PREFIX/include" &&
-          # export CXXFLAGS="$CXXFLAGS -I$PREFIX/include" &&
-          # export LDFLAGS="$LDFLAGS -Wl,-S -Wl,-rpath,$PREFIX/lib -L$PREFIX/lib -lomp" &&
-          # export CMAKE_PREFIX_PATH="$PREFIX" 
+          sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2 &&
+          PREFIX="/usr/local/miniconda/envs/build" &&
+          export CC=/usr/bin/clang &&
+          export CXX=/usr/bin/clang++ &&
+          export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp" &&
+          export CFLAGS="$CFLAGS -Wno-implicit-function-declaration -I$PREFIX/include" &&
+          export CXXFLAGS="$CXXFLAGS -I$PREFIX/include" &&
+          export LDFLAGS="$LDFLAGS -Wl,-S -Wl,-rpath,$PREFIX/lib -L$PREFIX/lib -lomp" &&
+          export CMAKE_PREFIX_PATH="$PREFIX" 
 
         CIBW_ENVIRONMENT_MACOS: >
-          CC=/usr/bin/clang
-          CXX=/usr/bin/clang++
-          CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
-          CFLAGS="$CFLAGS -Wno-implicit-function-declaration -I$PREFIX/include"
-          CXXFLAGS="$CXXFLAGS -I$PREFIX/include"
-          LDFLAGS="$LDFLAGS -Wl,-S -Wl,-rpath,$PREFIX/lib -L$PREFIX/lib -lomp"
-          CMAKE_PREFIX_PATH="$PREFIX"
+          CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build"
           
         CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
           DYLD_LIBRARY_PATH=/usr/local/miniconda/envs/build/lib delocate-listdeps {wheel} &&
