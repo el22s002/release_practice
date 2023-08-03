@@ -38,7 +38,7 @@ archs = ["auto64"]          # Only target 64 bit architectures
 
 [tool.cibuildwheel.macos]
 # "brew install opencv"
-before-all = ["brew install libomp"]
+before-all = ["brew install libomp", "brew install gcc"]
 
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.14"  # Needed for full C++17 support
