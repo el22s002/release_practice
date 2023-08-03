@@ -60,8 +60,8 @@ nanobind_add_module(
 install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 
 # OpenCV
-# find_package(OpenCV REQUIRED)
-# include_directories(${OpenCV_INCLUDE_DIRS})
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 # OpenMP
 if(APPLE)
