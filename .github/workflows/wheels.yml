@@ -39,9 +39,7 @@ jobs:
           cmake --build . &&
           cmake --install . 
 
-        CIBW_ENVIRONMENT_MACOS: >
-          CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build" &&
-          MACOSX_DEPLOYMENT_TARGET=12.0
+        CIBW_ENVIRONMENT_MACOS: CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build" MACOSX_DEPLOYMENT_TARGET=12.0
 
         CIBW_ENVIRONMENT_WINDOWS: >
           OpenCV_DIR="c:/tools/opencv/build"
