@@ -64,7 +64,8 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 
 # OpenMP
 if(APPLE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xpreprocessor -fopenmp -L$(brew --prefix libomp)/lib -I$(brew --prefix libomp)/include -lomp")
+  execute_process(COMMAND brew --prefix libomp OUTPUT_VARIABLE LIBOMP_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xpreprocessor -fopenmp -L${LIBOMP_PREFIX}/lib -I${LIBOMP_PREFIX}/include -lomp")
 else()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
 endif()
