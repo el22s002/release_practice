@@ -63,16 +63,38 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 #include_directories(${OpenCV_INCLUDE_DIRS})
 
 # OpenMP
-find_package(OpenMP)
+if(APPLE)
+  find_package(OpenMP)
 
-if(NOT OpenMP_FOUND)
-  # Print ls
-  execute_process(COMMAND ls)
+  if(NOT OpenMP_FOUND)
+    message(STATUS "OpenMP not found, trying again with brew --prefix libomp")
 
-  # Print pwd
-  execute_process(COMMAND pwd)
+    # Try again with extra path info; required for libomp 15+ from Homebrew
+    execute_process(COMMAND brew --prefix libomp
+      OUTPUT_VARIABLE HOMEBREW_LIBOMP_PREFIX
+      OUTPUT_STRIP_TRAILING_WHITESPACE)
+    set(OpenMP_C_FLAGS
+      "-Xpreprocessor -fopenmp -I${HOMEBREW_LIBOMP_PREFIX}/include")
+    set(OpenMP_CXX_FLAGS
+      "-Xpreprocessor -fopenmp -I${HOMEBREW_LIBOMP_PREFIX}/include")
+    set(OpenMP_C_LIB_NAMES omp)
+    set(OpenMP_CXX_LIB_NAMES omp)
+    set(OpenMP_omp_LIBRARY ${HOMEBREW_LIBOMP_PREFIX}/lib/libomp.dylib)
+    find_package(OpenMP REQUIRED)
 
-  message(FATAL_ERROR "OpenMP not found")
+    message(STATUS "OpenMP_C_FLAGS: ${OpenMP_C_FLAGS}")
+    message(STATUS "OpenMP_CXX_FLAGS: ${OpenMP_CXX_FLAGS}")
+    message(STATUS "OpenMP_C_LIB_NAMES: ${OpenMP_C_LIB_NAMES}")
+    message(STATUS "OpenMP_CXX_LIB_NAMES: ${OpenMP_CXX_LIB_NAMES}")
+    message(STATUS "OpenMP_omp_LIBRARY: ${OpenMP_omp_LIBRARY}")
+
+    if(NOT OpenMP_FOUND)
+      message(FATAL_ERROR "OpenMP not found")
+    endif()
+  endif()
+else()
+  find_package(OpenMP REQUIRED)
 endif()
-target_link_libraries(nanobind_example_ext PUBLIC OpenMP::OpenMP_CXX)
+
+target_link_libraries(nanobind_example_ext PRIVATE OpenMP::OpenMP_CXX)
 
