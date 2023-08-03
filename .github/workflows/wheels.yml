@@ -38,6 +38,7 @@ jobs:
         # CIBW_ARCHS_MACOS: x86_64
         # CIBW_ARCHS_MACOS: universal2
 
+        # OpenMP_CXX (OenMX_CXX_FLAGS and OpenMP_CXX_LIB_NAMES)
         CIBW_BEFORE_BUILD_MACOS: >
           sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2 &&
           PREFIX="/usr/local/miniconda/envs/build" &&
@@ -46,7 +47,11 @@ jobs:
           export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp" &&
           export CFLAGS="$CFLAGS -Wno-implicit-function-declaration -I$PREFIX/include" &&
           export CXXFLAGS="$CXXFLAGS -I$PREFIX/include" &&
-          export LDFLAGS="$LDFLAGS -Wl,-S -Wl,-rpath,$PREFIX/lib -L$PREFIX/lib -lomp"
+          export LDFLAGS="$LDFLAGS -Wl,-S -Wl,-rpath,$PREFIX/lib -L$PREFIX/lib -lomp" &&
+          export OpenMP_CXX_FLAGS="$CXXFLAGS" &&
+          export OpenMP_CXX_LIB_NAMES="omp" 
+          
+          
 
         # Temporary: use pre-release Python 3.12 for stable ABI builds
         CIBW_PRERELEASE_PYTHONS: True
