@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project(nanobind_example LANGUAGES CXX)
 
-if (NOT SKBUILD)
+if(NOT SKBUILD)
   message(WARNING "\
   This CMake file is meant to be executed using 'scikit-build'. Running
   it directly will almost certainly not produce the desired result. If
@@ -35,6 +35,7 @@ find_package(nanobind CONFIG REQUIRED)
 
 # We are now ready to compile the actual extension module
 nanobind_add_module(
+
   # Name of the extension
   nanobind_example_ext
 
@@ -59,12 +60,12 @@ nanobind_add_module(
 install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 
 # OpenCV
-#find_package(OpenCV REQUIRED)
-#include_directories(${OpenCV_INCLUDE_DIRS})
+# find_package(OpenCV REQUIRED)
+# include_directories(${OpenCV_INCLUDE_DIRS})
 
 # OpenMP
 if(APPLE)
-  #set(CMAKE_PREFIX_PATH "/usr/local/miniconda/envs/build")
+  # set(CMAKE_PREFIX_PATH "/usr/local/miniconda/envs/build")
   find_package(OpenMP)
 
   if(NOT OpenMP_FOUND)
@@ -74,10 +75,8 @@ if(APPLE)
     execute_process(COMMAND brew --prefix libomp
       OUTPUT_VARIABLE HOMEBREW_LIBOMP_PREFIX
       OUTPUT_STRIP_TRAILING_WHITESPACE)
-    set(OpenMP_C_FLAGS
-      "-Xpreprocessor -fopenmp -I${HOMEBREW_LIBOMP_PREFIX}/include")
-    set(OpenMP_CXX_FLAGS
-      "-Xpreprocessor -fopenmp -I${HOMEBREW_LIBOMP_PREFIX}/include")
+    set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp -I${HOMEBREW_LIBOMP_PREFIX}/include")
+    set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -I${HOMEBREW_LIBOMP_PREFIX}/include")
     set(OpenMP_C_LIB_NAMES omp)
     set(OpenMP_CXX_LIB_NAMES omp)
     set(OpenMP_omp_LIBRARY ${HOMEBREW_LIBOMP_PREFIX}/lib/libomp.dylib)
@@ -98,4 +97,3 @@ else()
 endif()
 
 target_link_libraries(nanobind_example_ext PRIVATE OpenMP::OpenMP_CXX)
-
