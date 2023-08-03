@@ -80,16 +80,12 @@ if(APPLE)
     set(OpenMP_CXX_LIB_NAMES omp)
     set(OpenMP_omp_LIBRARY ${HOMEBREW_LIBOMP_PREFIX}/lib/libomp.dylib)
     find_package(OpenMP REQUIRED)
-
+    
     message(STATUS "OpenMP_C_FLAGS: ${OpenMP_C_FLAGS}")
     message(STATUS "OpenMP_CXX_FLAGS: ${OpenMP_CXX_FLAGS}")
     message(STATUS "OpenMP_C_LIB_NAMES: ${OpenMP_C_LIB_NAMES}")
     message(STATUS "OpenMP_CXX_LIB_NAMES: ${OpenMP_CXX_LIB_NAMES}")
     message(STATUS "OpenMP_omp_LIBRARY: ${OpenMP_omp_LIBRARY}")
-
-    if(NOT OpenMP_FOUND)
-      message(FATAL_ERROR "OpenMP not found")
-    endif()
   endif()
 else()
   find_package(OpenMP REQUIRED)
