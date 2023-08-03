@@ -87,4 +87,28 @@ jobs:
           name: wheels
           path: ./dist/*.whl
 
-  
+  push_wheels:
+    name: Push wheels
+    needs: build_macos_wheels
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Download wheels
+      uses: actions/download-artifact@v3
+      with:
+        name: wheels
+        path: ./cpp_ext/dist
+        
+    - name: Display structure of downloaded files
+      run: ls -R
+      
+    - name: Push generated wheels
+      run: |
+        git config user.name github-actions[bot]
+        git config user.email github-actions[bot]@users.noreply.github.com
+        git add .
+        if git commit -m "Generate files by GitHub Actions"; then
+            git push
+        fi
