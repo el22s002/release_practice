@@ -9,16 +9,16 @@ using namespace nb::literals;
 
 void loop()
 {
-    int sum = 0;
-    #pragma omp parallel for
-    for (int i = 0; i<123456789000; i++)
+    long int sum = 0;
+#pragma omp parallel for
+    for (long int i = 0; i<123456789000; i++)
     {
         if (sum == i)
         {
             sum += 1;
         }
     }
-    
+
     std::cout << sum << std::endl;
 }
 
