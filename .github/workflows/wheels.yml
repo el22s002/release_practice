@@ -24,27 +24,25 @@ jobs:
         # Cross-compile on macOS
         CIBW_ARCHS_MACOS: arm64 
         # CIBW_ARCHS_MACOS: x86_64
-        # CIBW_ARCHS_MACOS: universal2
 
-        # OpenMP_CXX (OenMX_CXX_FLAGS and OpenMP_CXX_LIB_NAMES)
-        CIBW_BEFORE_BUILD_MACOS: >
+        CIBW_BEFORE_ALL_MACOS: >
           brew install opencv &&
           sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
 
-        CIBW_BEFORE_BUILD_WINDOWS: >
+        CIBW_BEFORE_ALL_WINDOWS: >
           choco install opencv
 
-        CIBW_BEFORE_BUILD_LINUX: >
-          if [ ! -d "opencv" ]; then
-            git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git &&
-            cd opencv && mkdir -p build && cd build &&
-            cmake .. -DBUILD_LIST=core &&
-            cmake --build . &&
-            cmake --install . 
-          fi
+        CIBW_BEFORE_ALL_LINUX: >
+          git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git &&
+          cd opencv && mkdir -p build && cd build &&
+          cmake .. -DBUILD_LIST=core &&
+          cmake --build . &&
+          cmake --install . 
 
         CIBW_ENVIRONMENT_MACOS: >
-          CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build"
+          CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build" &&
+          MACOSX_DEPLOYMENT_TARGET=12.0 &&
+          MACOS_DEPLOYMENT_TARGET=12.0
 
         CIBW_ENVIRONMENT_WINDOWS: >
           OpenCV_DIR="c:/tools/opencv/build"
