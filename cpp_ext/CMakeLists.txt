@@ -63,8 +63,5 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 #include_directories(${OpenCV_INCLUDE_DIRS})
 
 # OpenMP
-if(APPLE)
-  set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp")
-endif()
 find_package(OpenMP REQUIRED)
-target_link_libraries(nanobind_example_ext PUBLIC OpenMP::OpenMP_CXX)
+target_link_libraries(nanobind_example_ext PRIVATE OpenMP::OpenMP_CXX)
