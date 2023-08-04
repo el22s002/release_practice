@@ -30,23 +30,8 @@ build-dir = "build/{wheel_tag}"
 wheel.py-api = "cp312"
 
 
-[tool.cibuildwheel]
+# [tool.cibuildwheel]
 # Necessary to see build output from the actual compilation
-build-verbosity = 1
-skip = ["cp38-*", "pp38-*", "cp310-*", "pp310-*", "cp311-*", "pp311-*", "cp312-*", "pp312-*"] # Skip CPython and PyPy 3.8
-archs = ["auto64"]          # Only target 64 bit architectures
-
-[tool.cibuildwheel.macos]
-# "brew install opencv"
-#before-all = ["brew install libomp"]
-
-
-# [tool.cibuildwheel.macos.environment]
-# MACOSX_DEPLOYMENT_TARGET = "12.00"  # Needed for full C++17 support
-
-# [tool.cibuildwheel.linux]
-# before-all = ["git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git", "cd opencv && mkdir -p build && cd build", "cmake .. -DBUILD_LIST=core", "cmake --build .", "cmake --install ."]
-
-# [tool.cibuildwheel.windows]
-# before-all = ["choco install opencv"]
-# environment = { OpenCV_DIR="c:/tools/opencv/build" }
+# build-verbosity = 1
+# skip = ["cp38-*", "pp38-*", "cp310-*", "pp310-*", "cp311-*", "pp311-*", "cp312-*", "pp312-*"] # Skip CPython and PyPy 3.8
+# archs = ["auto64"]          # Only target 64 bit architectures
