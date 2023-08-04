@@ -94,7 +94,7 @@ jobs:
 
   push_wheels:
     name: Push wheels
-    needs: build_wheels
+    needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
 
     steps:
