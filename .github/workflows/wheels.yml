@@ -10,6 +10,10 @@ on:
 #       - cpp_ext/src/*
   workflow_dispatch:
 
+env:
+  CIBW_BUILD_VERBOSITY: 1
+  CIBW_BUILD: "cp3{8,9}-*"
+
 jobs:
   build_wheels:
     name: Wheels on ${{ matrix.os }}
@@ -36,6 +40,7 @@ jobs:
           DYLD_LIBRARY_PATH=/usr/local/miniconda/envs/build/lib delocate-wheel --require-archs {delocate_archs} -w {dest_dir} {wheel}
 
         # Linux
+        CIBW_ARCHS_LINUX: auto64
         CIBW_BEFORE_ALL_LINUX: >
           git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git &&
           cd opencv && mkdir -p build && cd build &&
@@ -44,6 +49,7 @@ jobs:
           cmake --install . 
 
         # Windows
+        CIBW_ARCHS_WINDOWS: auto64
         CIBW_BEFORE_ALL_WINDOWS: >
           choco install opencv
         CIBW_ENVIRONMENT_WINDOWS: >
