@@ -15,6 +15,24 @@ env:
   CIBW_BUILD: "cp3{8,9}-*"
 
 jobs:
+  build_sdist:
+    name: Build SDist
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build SDist
+      run: pipx run build --sdist
+      working-directory: ./cpp_ext
+
+    - name: Check metadata
+      run: pipx run twine check dist/*
+      working-directory: ./cpp_ext
+
+    - uses: actions/upload-artifact@v3
+      with:
+        path: ./cpp_ext/dist/*.tar.gz
+
   build_wheels:
     name: Wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
