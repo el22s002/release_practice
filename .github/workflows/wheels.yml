@@ -1,4 +1,4 @@
-name: Wheels
+name: Build Wheels
 
 # Reference:
 # https://github.com/scikit-image/scikit-image/blob/main/.github/workflows/wheels_recipe.yml
