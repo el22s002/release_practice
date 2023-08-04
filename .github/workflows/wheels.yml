@@ -24,21 +24,18 @@ jobs:
         
     - uses: pypa/cibuildwheel@v2.13.0
       env:
-        # Cross-compile on macOS
-        CIBW_ARCHS_MACOS: arm64 x86_64
-        # CIBW_ARCHS_MACOS: x86_64
-
+        # MacOS
+        CIBW_ARCHS_MACOS: arm64
         CIBW_BEFORE_ALL_MACOS: >
           brew install opencv &&
-          if [[ "$CIBW_ARCHS_MACOS" == arm64 ]]; then
-            sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
-          else
-            sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-64/llvm-openmp-11.1.0-hda6cdc1_1.tar.bz2
-          fi 
+          sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
+        CIBW_ENVIRONMENT_MACOS: >
+          CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build" 
+          MACOSX_DEPLOYMENT_TARGET=12.0
+        CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH=/usr/local/miniconda/envs/build/lib delocate-wheel --require-archs {delocate_archs} -w {dest_dir} {wheel}
 
-        CIBW_BEFORE_ALL_WINDOWS: >
-          choco install opencv
-
+        # Linux
         CIBW_BEFORE_ALL_LINUX: >
           git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git &&
           cd opencv && mkdir -p build && cd build &&
@@ -46,14 +43,12 @@ jobs:
           cmake --build . &&
           cmake --install . 
 
-        CIBW_ENVIRONMENT_MACOS: CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build" MACOSX_DEPLOYMENT_TARGET=12.0
-
+        # Windows
+        CIBW_BEFORE_ALL_WINDOWS: >
+          choco install opencv
         CIBW_ENVIRONMENT_WINDOWS: >
           OpenCV_DIR="c:/tools/opencv/build"
-          
-        CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-          DYLD_LIBRARY_PATH=/usr/local/miniconda/envs/build/lib delocate-wheel --require-archs {delocate_archs} -w {dest_dir} {wheel}
-        
+
         # Temporary: use pre-release Python 3.12 for stable ABI builds
         CIBW_PRERELEASE_PYTHONS: True
       with:
