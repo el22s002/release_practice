@@ -39,7 +39,7 @@ jobs:
           # brew install opencv && 
           brew fetch --force --bottle-tag=arm64_monterey opencv &&
           brew install $(brew --cache --bottle-tag=arm64_monterey opencv) &&
-          brew link --force --overwrite opencv
+          PKG_CONFIG_PATH="$(brew --prefix opencv)/lib/pkgconfig"
         CIBW_ENVIRONMENT_MACOS: >
           CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build"
           MACOSX_DEPLOYMENT_TARGET=12.6.8
