@@ -37,4 +37,9 @@ NB_MODULE(nanobind_example_ext, m) {
          cv::Vec3f vec;
          std::cout << vec << std::endl;
     });
+    m.def("get_mat", [](int width, int height) {
+        cv::Mat1f img(height, width);
+        return img;
+    });
+}
 }
