@@ -41,7 +41,7 @@ jobs:
           brew install $(brew --cache --bottle-tag=arm64_monterey opencv) 
           # PKG_CONFIG_PATH="$(brew --prefix opencv)/lib/pkgconfig"
         CIBW_ENVIRONMENT_MACOS: >
-          CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build:$(brew --prefix opencv)" &&
+          CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build:$(brew --prefix opencv)"
           # PKG_CONFIG_PATH="$(brew --prefix opencv)/lib/pkgconfig"
           MACOSX_DEPLOYMENT_TARGET=12.6.8
         CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
