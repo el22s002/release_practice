@@ -62,7 +62,7 @@ install(TARGETS nanobind_example_ext LIBRARY DESTINATION nanobind_example)
 # OpenCV
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
-target_link_libraries(nanobind_example_ext ${OpenCV_LIBS})
+target_link_libraries(nanobind_example_ext PRIVATE ${OpenCV_LIBS})
 
 # OpenMP
 if(APPLE)
