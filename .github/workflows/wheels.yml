@@ -45,7 +45,7 @@ jobs:
           git clone --depth 1 --branch 4.6.0 https://github.com/opencv/opencv.git &&
           cd opencv && mkdir -p build && cd build &&
           cmake .. -DBUILD_LIST=core &&
-          cmake --build . &&
+          cmake --build . -j 2 &&
           cmake --install . 
 
         # Windows
