@@ -36,13 +36,13 @@ jobs:
         CIBW_BEFORE_ALL_MACOS: >
           sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
         CIBW_BEFORE_BUILD_MACOS: >
-          # brew install opencv
-          brew fetch --force --bottle-tag=arm64_monterey opencv &&
-          brew install $(brew --cache --bottle-tag=arm64_monterey opencv)
+            # brew install opencv
+            brew fetch --force --bottle-tag=arm64_monterey opencv &&
+            brew install $(brew --cache --bottle-tag=arm64_monterey opencv) &&
+            export CMAKE_PREFIX_PATH=$(brew --prefix opencv)
         CIBW_ENVIRONMENT_MACOS: >
-          # CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build"
-          CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build; $(brew --prefix opencv)"
-          MACOSX_DEPLOYMENT_TARGET=12.6.8
+            CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build"
+            MACOSX_DEPLOYMENT_TARGET=12.6.8
         CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
           DYLD_LIBRARY_PATH=/usr/local/miniconda/envs/build/lib delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
 
