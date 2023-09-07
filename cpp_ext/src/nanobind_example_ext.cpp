@@ -43,4 +43,3 @@ NB_MODULE(nanobind_example_ext, m) {
     //     return img;
     // });
 }
-}
