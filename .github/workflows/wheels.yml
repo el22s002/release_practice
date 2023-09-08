@@ -41,6 +41,7 @@ jobs:
           for formula in $FORMULAS; 
           do 
             echo "Installing $formula";
+            brew uninstall --force $formula;
             brew fetch --force --bottle-tag=arm64_monterey $formula;
             brew install $(brew --cache --bottle-tag=arm64_monterey $formula); 
           done &&
