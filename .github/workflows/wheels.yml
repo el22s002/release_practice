@@ -26,7 +26,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
         
-    - uses: pypa/cibuildwheel@v2.13.0
+    - uses: pypa/cibuildwheel@v2.15.0
       env:
         CIBW_BUILD_VERBOSITY: 1
       
@@ -67,7 +67,7 @@ jobs:
           OpenCV_DIR="c:/tools/opencv/build"
 
         # Temporary: use pre-release Python 3.12 for stable ABI builds
-        CIBW_PRERELEASE_PYTHONS: True
+        # CIBW_PRERELEASE_PYTHONS: True
       with:
         package-dir: ./cpp_ext
         config-file: "{package}/pyproject.toml"
