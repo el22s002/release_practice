@@ -40,12 +40,12 @@ jobs:
           FORMULAS="$FORMULAS opencv" &&
           for formula in $FORMULAS; 
           do 
+            echo "Installing $formula";
             brew fetch --force --bottle-tag=arm64_monterey $formula;
-            if brew list --versions $formula | grep -q "bottle"; then
-              echo "Reinstalling $formula";
+            if brew list $formula &>/dev/null; then
+              echo "$formula is already installed";
               brew reinstall $(brew --cache --bottle-tag=arm64_monterey $formula); 
             else
-              echo "Installing $formula";
               brew install $(brew --cache --bottle-tag=arm64_monterey $formula); 
             fi
           done &&
