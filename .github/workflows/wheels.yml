@@ -40,10 +40,14 @@ jobs:
           FORMULAS="$FORMULAS opencv" &&
           for formula in $FORMULAS; 
           do 
-            echo "Installing $formula";
-            brew uninstall --force $formula;
             brew fetch --force --bottle-tag=arm64_monterey $formula;
-            brew install $(brew --cache --bottle-tag=arm64_monterey $formula); 
+            if brew list --versions $formula | grep -q "bottle"; then
+              echo "Reinstalling $formula";
+              brew reinstall $(brew --cache --bottle-tag=arm64_monterey $formula); 
+            else
+              echo "Installing $formula";
+              brew install $(brew --cache --bottle-tag=arm64_monterey $formula); 
+            fi
           done &&
           sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
         # CIBW_BEFORE_BUILD_MACOS: >
