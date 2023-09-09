@@ -40,7 +40,7 @@ NB_MODULE(nanobind_example_ext, m) {
     });
     m.def("get_mat", [](int width, int height) {
         cv::Mat1f img(height, width);
-        
+        cv::GaussianBlur(img, img, cv::Size(3, 3), 0, 0);
         return img;
     });
 }
