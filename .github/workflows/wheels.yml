@@ -35,7 +35,7 @@ jobs:
         CIBW_BEFORE_ALL_MACOS: >
           git clone https://github.com/opencv/opencv.git && 
           cd opencv && mkdir -p build && cd build &&
-          cmake .. -DBUILD_LIST=core,imgproc &&
+          cmake .. -DCMAKE_OSX_ARCHITECTURES=arm64 -DBUILD_LIST=core,imgproc &&
           cmake --build . -j 2 &&
           cmake --install . &&
           sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
