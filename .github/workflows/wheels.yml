@@ -51,7 +51,9 @@ jobs:
 
         CIBW_ARCHS_MACOS: x86_64
         CIBW_BEFORE_ALL_MACOS: >
-            brew install opencv libomp
+          brew install opencv libomp
+        CIBW_ENVIRONMENT_MACOS: >
+          MACOSX_DEPLOYMENT_TARGET=12.0
             
         # Linux
         CIBW_ARCHS_LINUX: auto64
