@@ -31,24 +31,28 @@ jobs:
         CIBW_BUILD_VERBOSITY: 1
       
         # MacOS
-        CIBW_ARCHS_MACOS: arm64
-        CIBW_BEFORE_ALL_MACOS: >
-          git clone https://github.com/opencv/opencv.git && 
-          cd opencv && mkdir -p build && cd build &&
-          arch -arm64 cmake .. -DBUILD_LIST=core,imgproc &&
-          arch -arm64 cmake --build . -j 2 &&
-          arch -arm64 cmake --install . &&
-          sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
-        # CIBW_BEFORE_ALL_MACOS: > 
-          # brew fetch --force --bottle-tag=arm64_monterey opencv &&
-          # brew install $(brew --cache --bottle-tag=arm64_monterey opencv)  &&
-        CIBW_ENVIRONMENT_MACOS: >
-          CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build" 
-          MACOSX_DEPLOYMENT_TARGET=12.0
-        CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-          DYLD_LIBRARY_PATH=/usr/local/lib delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
-          # /usr/local/miniconda/envs/build/lib:
+        # CIBW_ARCHS_MACOS: arm64
+        # CIBW_BEFORE_ALL_MACOS: >
+        #   git clone https://github.com/opencv/opencv.git && 
+        #   cd opencv && mkdir -p build && cd build &&
+        #   arch -arm64 cmake .. -DBUILD_LIST=core,imgproc &&
+        #   arch -arm64 cmake --build . -j 2 &&
+        #   arch -arm64 cmake --install . &&
+        #   sudo conda create -n build https://anaconda.org/conda-forge/llvm-openmp/11.1.0/download/osx-arm64/llvm-openmp-11.1.0-hf3c4609_1.tar.bz2
+        # # CIBW_BEFORE_ALL_MACOS: > 
+        #   # brew fetch --force --bottle-tag=arm64_monterey opencv &&
+        #   # brew install $(brew --cache --bottle-tag=arm64_monterey opencv)  &&
+        # CIBW_ENVIRONMENT_MACOS: >
+        #   CMAKE_PREFIX_PATH="/usr/local/miniconda/envs/build" 
+        #   MACOSX_DEPLOYMENT_TARGET=12.0
+        # CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+        #   DYLD_LIBRARY_PATH=/usr/local/lib delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+        #   # /usr/local/miniconda/envs/build/lib:
 
+        CIBW_ARCHS_MACOS: x86_64
+        CIBW_BEFORE_ALL_MACOS: >
+            brew install opencv libomp
+            
         # Linux
         CIBW_ARCHS_LINUX: auto64
         CIBW_BEFORE_ALL_LINUX: >
